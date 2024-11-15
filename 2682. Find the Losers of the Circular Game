@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> circularGameLosers(int n, int k) {
+        int cnt[100] = {0}, ans = 1;
+        cnt[1] = 1;
+        for(int i = 1; i <= n; i++){
+            int tmp = i * k;
+            int indx  = (tmp + ans);
+            if(indx > n){
+                if(indx % n == 0){
+                    indx = n;
+                }
+                else indx %= n;
+            }
+            if(cnt[indx] == 1){
+                break;
+            }
+            cnt[indx]++;
+            ans = indx;
+        }
+        vector<int> losers;
+        for(int i = 1; i <= n; i++){
+            if(cnt[i] == 0){
+                losers.push_back(i);
+            }
+        }
+        sort(losers.begin(), losers.end());
+        return losers;
+    }
+};
